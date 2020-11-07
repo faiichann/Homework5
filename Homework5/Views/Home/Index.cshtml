@@ -1,0 +1,59 @@
+﻿@model IEnumerable<Homework5.Model.db.Post>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Post</h1>
+
+<hr />
+
+<div class="row">
+    <div class="col-8">
+        <form asp-action="Index" method="post" asp-controller="Home">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group row">
+                <label for="staticEmail" class="col-4 col-form-label">User ID</label>
+                <div class="col-8">
+                    <input type="number" class="form-control" name="Id" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="inputPassword" class="col-4 col-form-label">User Name</label>
+                <div class="col-8">
+                    <input type="text" name="name" class="form-control" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="inputPassword" class="col-4 col-form-label">Post Your Status</label>
+                <div class="col-8">
+                    <textarea type="text" name="post" class="form-control" rows="3" id="exampleFormControlTextarea1"></textarea>
+                </div>
+            </div>
+            <input type="text" name="date" hidden value="@DateTime.Now" /><br />
+            <div class="form-group">
+                <center><input type="submit" value="Post" class="btn btn-primary" /></center>
+            </div>
+        </form>
+    </div>
+</div><br />
+
+<h1>New Timeline</h1>
+
+<hr />
+<div class="list-group" style="width: 80%">
+    @foreach (var item in Model)
+    {
+        <a href="#" class="list-group-item list-group-item-action">
+            <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1"> @Html.DisplayFor(modelItem => item.UserPost) </h5>
+                <small class="text-muted"> @Html.DisplayFor(modelItem => item.UserDate)</small>
+            </div>
+            <p class="mb-1">@Html.DisplayFor(modelItem => item.UserName)</p>
+        </a>
+    }
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
