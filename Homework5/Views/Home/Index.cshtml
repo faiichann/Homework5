@@ -3,6 +3,10 @@
 @{
     ViewData["Title"] = "Index";
 }
+<div class="text-center">
+    <a asp-action="Search" >Search post</a>
+
+</div>
 
 <h1>Post</h1>
 
@@ -42,7 +46,7 @@
 
 <hr />
 <div class="list-group" style="width: 80%">
-    @foreach (var item in Model)
+    @foreach (var item in Model.OrderByDescending(i => i.UserDate))
     {
         <a href="#" class="list-group-item list-group-item-action">
             <div class="d-flex w-100 justify-content-between">

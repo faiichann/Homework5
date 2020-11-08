@@ -22,6 +22,17 @@ namespace Homework5.Controllers
         {
             _logger = logger;
         }
+        public IActionResult Search(String query)
+        {
+            if (string.IsNullOrEmpty(query))
+            {
+                return View("Search", db.Post.ToList());
+            }
+            else
+            {
+                return View("Search", db.Post.Where(p => p.UserName.Contains(query)).ToList());
+            }
+        }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -46,6 +57,8 @@ namespace Homework5.Controllers
             var ps = from p in db.Post select p;
             return View(ps);
         }
+
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
