@@ -3,60 +3,61 @@
 @{
     ViewData["Title"] = "Index";
 }
-<div class="text-center">
-    <a asp-action="Search" >Search post</a>
 
-</div>
-
-<h1>Post</h1>
-
-<hr />
-
-<div class="row">
+<div class="row" style="margin-top:50px;justify-content:center;margin-bottom:50px">
     <div class="col-8">
-        <form asp-action="Index" method="post" asp-controller="Home">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group row">
-                <label for="staticEmail" class="col-4 col-form-label">User ID</label>
-                <div class="col-8">
-                    <input type="number" class="form-control" name="Id" />
+        <div class="card" style="width: 100% ; box-shadow: 0 12px 12px 0 rgba(0,0,0,0.2); background-color:white; 
+            display:flex; justify-content:center;padding:50px; border-radius:30px;">
+            <form asp-action="Index" method="post" asp-controller="Home">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group row">
+                    <div class="col-6">
+                        <input type="number" class="form-control" name="Id" placeholder="UserID" />
+                    </div>
+                    <div class="col-6">
+                        <input type="text" name="name" class="form-control" placeholder="User Name" />
+                    </div>
                 </div>
-            </div>
-            <div class="form-group row">
-                <label for="inputPassword" class="col-4 col-form-label">User Name</label>
-                <div class="col-8">
-                    <input type="text" name="name" class="form-control" />
+                <div class="form-group row">
+                    <div class="col-12">
+                        <textarea style="border:none" type="text" name="post" class="form-control" rows="3" id="exampleFormControlTextarea1" placeholder="Create your post.."></textarea>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group row">
-                <label for="inputPassword" class="col-4 col-form-label">Post Your Status</label>
-                <div class="col-8">
-                    <textarea type="text" name="post" class="form-control" rows="3" id="exampleFormControlTextarea1"></textarea>
+                <input type="text" name="date" hidden value="@DateTime.Now" /><br />
+                <div class="form-group " style="display:flex; justify-content:flex-end; padding-right:0px;">
+                    <input type="submit" value="Post" class="btn btn-primary" />
                 </div>
-            </div>
-            <input type="text" name="date" hidden value="@DateTime.Now" /><br />
-            <div class="form-group">
-                <center><input type="submit" value="Post" class="btn btn-primary" /></center>
-            </div>
-        </form>
+            </form>
+        </div>
+        </div>
     </div>
-</div><br />
-
-<h1>New Timeline</h1>
 
 <hr />
-<div class="list-group" style="width: 80%">
-    @foreach (var item in Model.OrderByDescending(i => i.UserDate))
-    {
-        <a href="#" class="list-group-item list-group-item-action">
-            <div class="d-flex w-100 justify-content-between">
-                <h5 class="mb-1"> @Html.DisplayFor(modelItem => item.UserPost) </h5>
-                <small class="text-muted"> @Html.DisplayFor(modelItem => item.UserDate)</small>
-            </div>
-            <p class="mb-1">@Html.DisplayFor(modelItem => item.UserName)</p>
-        </a>
-    }
+<div class="row" style="margin-top:50px;justify-content:center;margin-bottom:50px">
+    <div class="col-8">
+        <div class="list-group">
+            @foreach (var item in Model.OrderByDescending(i => i.UserDate))
+            {
+            <a href="#" class="list-group-item list-group-item-action" style="margin-bottom:10px;padding:40px">
+                
+                <div class="d-flex w-100 justify-content-between" style="margin-bottom:10px">
+                    <h5 class="mb-1"> @Html.DisplayFor(modelItem => item.UserPost) </h5>
+                    <small class="text-muted"> @Html.DisplayFor(modelItem => item.UserDate)</small>
+                </div>
+                <div class="row">
+                    <div class="col-1">
+                        <img src="./img/user.png" style="width:30px; border-radius:50%; background-color:#2D52B3">
+                    </div>
+                    <div class="col">
+                        <p class="mb-1" style="font-size:larger; font-weight:400;">@Html.DisplayFor(modelItem => item.UserName)</p>
+                    </div>
+                </div>
+            </a>
+            }
+        </div>
+    </div>
 </div>
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
